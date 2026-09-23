@@ -21,9 +21,9 @@ def project_path(value: str) -> Path:
     return path if path.is_absolute() else PROJECT_ROOT / path
 
 
-DATA_DIR = project_path(os.getenv("TREX_DATA_DIR", "img"))
-MODEL_JSON_PATH = project_path(os.getenv("TREX_MODEL_JSON", "model.json"))
-MODEL_WEIGHTS_PATH = project_path(os.getenv("TREX_MODEL_WEIGHTS", "trex.weights.h5"))
+DATA_DIR = project_path(os.getenv("TREX_DATA_DIR", "data/training"))
+MODEL_JSON_PATH = project_path(os.getenv("TREX_MODEL_JSON", "models/model.json"))
+MODEL_WEIGHTS_PATH = project_path(os.getenv("TREX_MODEL_WEIGHTS", "models/trex.weights.h5"))
 
 IMAGE_WIDTH = int(os.getenv("TREX_IMAGE_WIDTH", "125"))
 IMAGE_HEIGHT = int(os.getenv("TREX_IMAGE_HEIGHT", "50"))

@@ -8,7 +8,7 @@ T-Rex AI is a Python project that trains and runs a small convolutional neural n
 - Train a Keras/TensorFlow CNN from local screenshot data.
 - Run live inference against the browser game using screen capture.
 - Configure capture regions, model paths, and training settings with environment variables.
-- Keep large generated model weights out of the Git repository.
+- Store the trained weights with Git LFS so the bot can run after cloning.
 
 ## Tech Stack
 
@@ -62,14 +62,29 @@ Important settings:
 
 ## Model Weights
 
-The local `trex.weights.h5` file is a generated artifact and is intentionally ignored by Git. It is also larger than GitHub's normal 100 MB file limit.
+The trained weights are stored at `models/trex.weights.h5` with Git LFS because the file is larger than GitHub's normal 100 MB file limit.
 
-To use the project after cloning:
+After cloning, make sure Git LFS has downloaded the real weights file:
 
-1. Train a new model with `python train.py`, or
-2. Download a published weights file separately and set `TREX_MODEL_WEIGHTS` to its path.
+```bash
+git lfs install
+git lfs pull
+```
 
-The included `model.json` stores the model architecture, but live play requires a matching weights file.
+The included `models/model.json` stores the model architecture. Live play requires the matching `models/trex.weights.h5` file.
+
+## Training Results
+
+Latest recorded training run:
+
+- Training accuracy: 99.08%
+- Test accuracy: 91.89%
+- Dataset: 146 labeled screenshots in `data/training`
+- Epochs: 35
+- Batch size: 64
+- Train/test split: 75% / 25%
+
+See [TRAINING_RESULTS.md](TRAINING_RESULTS.md) for the full run summary and notes.
 
 ## Usage
 
@@ -127,7 +142,15 @@ python -m compileall .
 
 ```text
 .
-├── img/                    # Curated training screenshots
+├── data/
+│   └── training/           # Curated labeled training screenshots
+├── models/
+│   ├── model.json          # Model architecture
+│   └── trex.weights.h5     # Trained model weights, stored with Git LFS
+├── scripts/                # Explicit command-line entry points
+│   ├── collect_data.py
+│   ├── play.py
+│   └── train.py
 ├── tests/                  # Unit tests
 ├── trex_ai/                # Application package
 │   ├── collect_data.py     # Screenshot collection workflow
@@ -136,16 +159,16 @@ python -m compileall .
 │   ├── play.py             # Live game automation
 │   ├── preprocessing.py    # Image and label preprocessing
 │   └── train.py            # Training workflow
-├── get_data.py             # Backward-compatible collection entry point
-├── train.py                # Backward-compatible training entry point
-├── trex_play.py            # Backward-compatible play entry point
-├── model.json              # Model architecture
+├── get_data.py             # Backward-compatible collection wrapper
+├── train.py                # Backward-compatible training wrapper
+├── trex_play.py            # Backward-compatible play wrapper
+├── TRAINING_RESULTS.md     # Latest training metrics
 └── .env.example            # Safe configuration template
 ```
 
 ## Troubleshooting
 
-- `FileNotFoundError: Model weights file not found`: train the model first or point `TREX_MODEL_WEIGHTS` to a downloaded weights file.
+- `FileNotFoundError: Model weights file not found`: run `git lfs pull`, train the model, or point `TREX_MODEL_WEIGHTS` to another weights file.
 - The bot presses keys at the wrong time: adjust `TREX_PLAY_TOP` and `TREX_PLAY_LEFT` so the capture region matches the game area on your screen.
 - Data collection saves blank or wrong images: adjust the record capture settings and make sure the game window is visible.
 - Keyboard input does not work: the `keyboard` package can require elevated permissions on some systems.
@@ -153,4 +176,4 @@ python -m compileall .
 
 ## Security
 
-This repository does not need API keys, passwords, tokens, or private URLs. Keep `.env`, generated weights, and other local-only files out of commits.
+This repository does not need API keys, passwords, tokens, or private URLs. Keep `.env` and other local-only files out of commits.

@@ -12,5 +12,5 @@ Thanks for improving this project.
 ## Repository hygiene
 
 - Do not commit `.env` files, local credentials, or personal machine paths.
-- Do not commit generated model weights such as `*.weights.h5`; publish large weights through GitHub Releases, cloud storage, or Git LFS instead.
+- Do not commit generated model weights directly; this repo keeps `models/trex.weights.h5` through Git LFS.
 - Keep training images intentional. Remove accidental screenshots before committing.
