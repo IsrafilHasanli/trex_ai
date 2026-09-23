@@ -60,19 +60,6 @@ Important settings:
 - `TREX_PLAY_TOP`, `TREX_PLAY_LEFT`: screen region used while playing.
 - `TREX_CAPTURE_WIDTH`, `TREX_CAPTURE_HEIGHT`: capture region size.
 
-## Model Weights
-
-The trained weights are stored at `models/trex.weights.h5` with Git LFS because the file is larger than GitHub's normal 100 MB file limit.
-
-After cloning, make sure Git LFS has downloaded the real weights file:
-
-```bash
-git lfs install
-git lfs pull
-```
-
-The included `models/model.json` stores the model architecture. Live play requires the matching `models/trex.weights.h5` file.
-
 ## Training Results
 
 Latest recorded training run:
