@@ -27,8 +27,10 @@ Thumbs.db
 
 # Generated model artifacts
 *.weights.h5
+!trex.weights.h5
 *.keras
 *.h5
+!trex.weights.h5
 checkpoints/
 runs/
 
