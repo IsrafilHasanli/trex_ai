@@ -1,0 +1,34 @@
+[project]
+name = "trex-ai"
+version = "0.1.0"
+description = "A small CNN-based bot for the Chrome T-Rex runner game."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "keyboard>=0.13.5",
+    "keras>=3.0",
+    "mss>=9.0",
+    "numpy>=1.26",
+    "pillow>=10.0",
+    "python-dotenv>=1.0",
+    "scikit-learn>=1.4",
+    "tensorflow>=2.16,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+trex-collect = "trex_ai.collect_data:main"
+trex-train = "trex_ai.train:main"
+trex-play = "trex_ai.play:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
